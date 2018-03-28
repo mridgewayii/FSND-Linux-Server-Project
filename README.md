@@ -291,9 +291,11 @@ Install the Postgres SQL Application:
 
 `sudo apt-get install postgresql`
 
-Make sure remote access is not allowed:
+Make sure remote access is not allowed.  By default, only local access
+was allowed and can be determined by looking at the following files and
+make sure no external IP addresses are listed:
 
-`sudo nano /etc/postgresql/9.3/main/pg_hba.conf`
+`sudo nano /etc/postgresql/9.5/main/pg_hba.conf`
 
 Create a password for postgres:
 
@@ -384,6 +386,7 @@ see the site but will *NOT ALLOW YOU TO LOG INTO GOOGLE*
 * Udacity FSND Lectures: [https://www.digitalocean.com/community/tutorials/how-to-setup-a-firewall-with-ufw-on-an-ubuntu-and-debian-cloud-server](https://www.digitalocean.com/community/tutorials/how-to-setup-a-firewall-with-ufw-on-an-ubuntu-and-debian-cloud-server)
 * Ask Ubuntu [https://askubuntu.com/questions/194/how-can-i-install-just-security-updates-from-the-command-line](https://askubuntu.com/questions/194/how-can-i-install-just-security-updates-from-the-command-line)
 * harushimo's GitHub Readme: [https://github.com/harushimo/linux-server-configuration](https://github.com/harushimo/linux-server-configuration)
+* DigitalOcean: [https://www.digitalocean.com/community/tutorials/how-to-secure-postgresql-against-automated-attacks](https://www.digitalocean.com/community/tutorials/how-to-secure-postgresql-against-automated-attacks)
 * Ubuntu (of course) [https://www.ubuntu.com/](https://www.ubuntu.com/)
 * Apache/mod-wsgi: [http://flask.pocoo.org/docs/0.10/deploying/mod_wsgi/](http://flask.pocoo.org/docs/0.10/deploying/mod_wsgi/)
 * Postgresql: [https://www.postgresql.org/docs/current/static/index.html](https://www.postgresql.org/docs/current/static/index.html)
