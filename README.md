@@ -95,9 +95,11 @@ sudo ufw allow 80/tcp
 sudo ufw allow 123
 sudo ufw allow 123/tcp
 ```
+
 Activate the firewall:
 
 `sudo ufw enable`
+
 Verify that your firewall is running:
 
 `sudo ufw status`
@@ -368,8 +370,10 @@ see the site but will *NOT ALLOW YOU TO LOG INTO GOOGLE*
 
 ### Giving Credit Where Credit is Due
 * Countless hours on Udacity Forums scowering information from bits and peices of answers
-* harushimo's GitHub Readme: [https://github.com/harushimo/linux-server-configuration](https://github.com/harushimo/linux-server-configuration)
 * Udacity FSND Lectures: [https://www.digitalocean.com/community/tutorials/how-to-setup-a-firewall-with-ufw-on-an-ubuntu-and-debian-cloud-server](https://www.digitalocean.com/community/tutorials/how-to-setup-a-firewall-with-ufw-on-an-ubuntu-and-debian-cloud-server)
+* Ask Ubuntu [https://askubuntu.com/questions/194/how-can-i-install-just-security-updates-from-the-command-line](https://askubuntu.com/questions/194/how-can-i-install-just-security-updates-from-the-command-line)
+* harushimo's GitHub Readme: [https://github.com/harushimo/linux-server-configuration](https://github.com/harushimo/linux-server-configuration)
+* Ubuntu (of course) [https://www.ubuntu.com/](https://www.ubuntu.com/)
 * Apache/mod-wsgi: [http://flask.pocoo.org/docs/0.10/deploying/mod_wsgi/](http://flask.pocoo.org/docs/0.10/deploying/mod_wsgi/)
-* Postgresql: [http://killtheyak.com/use-postgresql-with-django-flask/](http://killtheyak.com/use-postgresql-with-django-flask/)
+* Postgresql: [https://www.postgresql.org/docs/current/static/index.html](https://www.postgresql.org/docs/current/static/index.html)
 * Abigail Mathews's GitHub Readme: [https://github.com/AbigailMathews/FSND-P5](https://github.com/AbigailMathews/FSND-P5)
