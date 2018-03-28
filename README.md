@@ -1,6 +1,16 @@
 # FSND Linux Server Project
 A description for setting up a AWS Lightsail Linux instance and preparing it for deploying the FSND catalog app
-# Linux Server Configuration
+# Connection Requirements
+
+Public URL: [http://35.174.74.235.xip.io](http://35.174.74.235.xip.io)
+
+IP Address: 35.174.74.235
+
+SSH Port: 2200
+
+Connection String:
+
+ssh -i "/path/to/key/" grader@35.174.74.235 -p 2200
 
 ## Overview of the Project
 As the final project of the Udacity FullStack Nanodegree program, this exercise will satify the requirements to start a new Linux Ubuntu instance on the Amazon Lightsail platform.  This documentation will walk through the process of establishing the required updates, security, and platform following the requirements rubric in the Udacity Nanodegree program.  To save on duplication, the step-by-step requirements in the Linux Server Configuration - "Get started on Lightsail" will not be duplicated here.
