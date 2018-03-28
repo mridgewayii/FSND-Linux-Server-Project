@@ -19,9 +19,11 @@ First get an updates that are availible.
 `sudo apt-get update ` 
 
 Second get any upgrades that are availible.
+
 `sudo apt-get upgrade`
 
 Finally, this instance showed that there were four security upgrades that had not been updated so the following is required to handle those upgrades:
+
 `sudo unattended-upgrades -d`
 
 ### Step 2: Create a New User (grader)
@@ -37,7 +39,8 @@ Create the user id while logged in as the default sudo user Ubuntu:
 *The grader userid is granted sudo access through the following steps:*
 
 First, copy the original ubuntu user's sudoer file:
-'cp /etc/sudoers.d/ubuntu /etc/sudoers.d/grader`
+
+`cp /etc/sudoers.d/ubuntu /etc/sudoers.d/grader`
 
 Second edit the file
 `sudo nano /etc/sudoers.d/grader`
@@ -56,7 +59,7 @@ the directory to hold the key pair:
 
 Next, create the file "authorized_keys" that will contain the key pair.
 
-'touch /home/grader/.ssh/authorized_keys`
+`touch /home/grader/.ssh/authorized_keys`
 
 Next the key that has been generate locally, via the ssh-keygen method or other, will need 
 to be copied (preferred) or typed into the file we just created:
@@ -71,10 +74,17 @@ few steps.
 ### Step 3: Disable root
 
 Disable both root login and password
-```
-sudo nano /etc/ssh/sshd_config
-sudo service ssh restart
-```
+
+`sudo nano /etc/ssh/sshd_config`
+
+Disable the root login by verify or changing the following parameter to "no"
+
+`PermitRootLogin no`
+
+Finally, restart the SSH service to assure changes are made effective.
+
+`sudo service ssh restart`
+
 ### Step 4: Configure the ufw Firewall
 
 Note: as we configured SSH on port 2200, we will not open port 22.  This must be done before
@@ -141,6 +151,7 @@ Install git with the following command:
 `sudo apt-get install git`
 
 Install the catalog application created earlier in the Udacity FSND program:
+
 ```
 sudo git clone https://github.com/ssicet/FSND-Linux-Server-Project catalog
 ```
