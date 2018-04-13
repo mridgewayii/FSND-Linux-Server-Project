@@ -36,45 +36,53 @@ Finally, this instance showed that there were four security upgrades that had no
 
 `sudo unattended-upgrades -d`
 
-### Step 2: Create a New User (grader)
+### Step 2: Create a New User (<new_user>)
 
-One requirement by Udacity is to create a new sudo user, 'grader' to replace the default login, 
+One requirement is to create a new sudo user, '<new_user>' to replace the default login, 
 and to disable root access.  You will be asked to create a password during this process and 
 since the user will have sudo access, a password needs to be established.  The remaining 
 questions can be completed as applicable.
 Create the user id while logged in as the default sudo user Ubuntu:
 
-`sudo adduser grader`
+`sudo adduser <new_user>`
+
+It will prompt for a password. Add any password to that field. After the user gets created, run this command to give the grader sudo priviledges:
 
 *The grader userid is granted sudo access through the following steps:*
 
-First, copy the original ubuntu user's sudoer file:
+`sudo visudo`
 
-`cp /etc/sudoers.d/ubuntu /etc/sudoers.d/grader`
+Once your in the visudo file, go to the section user privilege specification
 
-Second edit the file
-`sudo nano /etc/sudoers.d/grader`
+root    ALL=(ALL:ALL) ALL
 
-Edit the line:
+Add the following line to provide sudo access to your <new_user>
+
+<new_user> ALL=(ALL:ALL) ALL
+
+Eit the file
+
+`sudo nano /etc/sudoers.d/<new_user>`
+
+Add the line:
 
 ```
-ubuntu ALL=(ALL:ALL) ALL to
-grader ALL=(ALL:ALL) ALL
+<new_user> ALL=(ALL:ALL) ALL
 ```
 
-The grader user is required to have a seperate keypair for ssh access. First you must make
+The <new_user> user is required to have a seperate keypair for ssh access. First you must make
 the directory to hold the key pair:
 
-`sudo mkdir /home/grader/.ssh`
+`sudo mkdir /home/<new_user>/.ssh`
 
 Next, create the file "authorized_keys" that will contain the key pair.
 
-`touch /home/grader/.ssh/authorized_keys`
+`touch /home/<new_user>/.ssh/authorized_keys`
 
 Next the key that has been generate locally, via the ssh-keygen method or other, will need 
 to be copied (preferred) or typed into the file we just created:
 
-`sudo nano /home/grader/.ssh/authorized_keys`
+`sudo nano /home/<new_user>/.ssh/authorized_keys`
 
 Another requirement of the project is to configure the SSH port for a non-standard port 2200.
 Before beginning, access the networking tab in the Amazon Lightsail interface and allow this 
@@ -87,9 +95,26 @@ Disable both root login and password
 
 `sudo nano /etc/ssh/sshd_config`
 
+Update the ssh port
+
+```
+# What ports, IPs and protocols we listen for
+# Port 22
+Port 2200
+```
+
 Disable the root login by verify or changing the following parameter to "no"
 
-`PermitRootLogin no`
+```
+# Authentication:
+LoginGraceTime 120
+#PermitRootLogin prohibit-password
+PermitRootLogin no
+StrictModes yes
+```
+Change to no to disable tunnelled clear text passwords
+
+`PasswordAuthentication No`
 
 Finally, restart the SSH service to assure changes are made effective.
 
@@ -390,6 +415,69 @@ Log into the site from any web browser at the following URL:
 
 Accessing by the IP only or the [ec2-35-174-74-235.compute-1.amazonaws.com](ec2-35-174-74-235.compute-1.amazonaws.com) will allow you to 
 see the site but will *NOT ALLOW YOU TO LOG INTO GOOGLE*
+
+### Part 17: Installing PHP if Needed
+
+If you're using the latest version of Ubuntu (16.04 or later), consider using PHP7.0 instead of PHP5. To do so, check if you already have PHP installed.
+
+`php --version`
+
+If you do not have PHP already installed, you will likely see a message such as
+
+```
+$ php --version
+The program 'php' can be found in the following packages:
+ * php7.0-cli
+ * hhvm
+Try: sudo apt install <selected package>
+```
+
+To install PHP from the Ubuntu repositories,
+
+
+`sudo apt install php`
+If you already have PHP installed, you will likely see something like
+
+```
+$ php --version
+PHP 7.0.4-7ubuntu2 (cli) ( NTS )
+Copyright (c) 1997-2016 The PHP Group
+Zend Engine v3.0.0, Copyright (c) 1998-2016 Zend Technologies
+    with Zend OPcache v7.0.6-dev, Copyright (c) 1999-2016, by Zend Technologies
+```
+
+At this point, Apache and PHP are installed and ready to go. A recent update to the Lucid distribution, however, requires a slight change to /etc/apache2/mods-available/php5.conf to re-enable interpretation in users' home directories -- previous distributions do not require this change. Simply open up this file in your favorite editor as root (a simple sudo gedit /etc/apache2/mods-available/php5.conf will suffice) and comment out (or remove) the following lines:
+
+```
+    <IfModule mod_userdir.c>
+        <Directory /home/*/public_html>
+            php_admin_value engine Off
+        </Directory>
+    </IfModule>
+```
+If you don't see anything starting with PHP in /etc/apache2/mods-available, you likely need to install libapache2-mod-php. Run
+
+`sudo apt install libapache2-mod-php`
+
+After running it, you should see phpx.conf and phpx.load where x is the current PHP version. For example, at the time of this writing, I see php7.0.conf and php7.0.load. Edit the conf file as shown above.
+
+Once this has been done, restart apache2 with the usual sudo /etc/init.d/apache2 restart and PHP should be successfully installed and working.
+
+Make sure you have userdir enabled. If it is not enabled, run the following to enable it
+
+`sudo a2enmod userdir`
+
+Security note: Running PHP scripts in users' home directories was not disabled for a frivolous reason -- PHP is a full programming language, and as such, can be used by attackers in nefarious ways. Ideally, the PHP engine should only be enabled for users you (the system administrator) trust, and even then sparingly. To do this, instead of removing the above lines, create a file (as root) called /etc/apache2/conf.d/php-in-homedirs.conf with the following contents:
+
+```
+<IfModule mod_userdir.c>
+    <Directory /home/$USERNAME/public_html>
+        php_admin_value engine On
+    </Directory>
+</IfModule>
+```
+
+Simply replace the $USERNAME with the user name of the user you wish to allow PHP access to. Also note that the <Directory> section may be repeated as many times as is necessary. Save the file, and restart Apache with a sudo /etc/init.d/apache2 restart and PHP should only be enabled for the users listed in this file. See the Apache documentation on the Directory tag for more information.
 
 ### Giving Credit Where Credit is Due
 * Countless hours on Udacity Forums scowering information from bits and peices of answers
