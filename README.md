@@ -70,6 +70,14 @@ Add the line:
 <new_user> ALL=(ALL:ALL) ALL
 ```
 
+Creating the ssh keys
+`LOCAL MACHINE:~$ ssh-keygen`
+
+Two things will happen:
+
+1. You can name the file whatever you want. Keep in mind when you name the file it will give you a private key and public key
+2. It will prompt you for a pass phrase. You can enter one or leave it blank
+
 The <new_user> user is required to have a seperate keypair for ssh access. First you must make
 the directory to hold the key pair:
 
