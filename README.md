@@ -486,6 +486,29 @@ Security note: Running PHP scripts in users' home directories was not disabled f
 ```
 
 Simply replace the $USERNAME with the user name of the user you wish to allow PHP access to. Also note that the <Directory> section may be repeated as many times as is necessary. Save the file, and restart Apache with a sudo /etc/init.d/apache2 restart and PHP should only be enabled for the users listed in this file. See the Apache documentation on the Directory tag for more information.
+    
+### Part 17: Installing Composer if Needed
+In the command prompt and home directory
+```
+sudo wget https://getcomposer.org/composer.phar
+sudo mv composer.phar composer
+chmod +x composer
+```
+
+Check to assure composer is working by typing:
+```
+./composer
+```
+
+If not problems, move the composer directory to the bin:
+```
+sudo mv composer /usr/local/bin
+```
+
+Test again when it completes to make sure all is working correctly
+```
+composer
+```
 
 ### Giving Credit Where Credit is Due
 * Countless hours on Udacity Forums scowering information from bits and peices of answers
