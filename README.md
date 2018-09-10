@@ -168,7 +168,7 @@ will find UTC.  Per the Udacity rubric, select UTC and exit
 the program.
 
 
-### Part 6: Install Apache and mod-wsgi for a Python Flask Application
+### Part 6A: Install Apache and mod-wsgi for a Python Flask Application
 
 First, install Apache:
 
@@ -186,6 +186,20 @@ Restart Apache so that latest changes are applied.
 
 `sudo service apache2 restart`
 
+
+### Part 6B: Install Python3
+
+Prepare the Python3 package
+
+`sudo add-apt-repository ppa:jonathonf/python-3.6`
+
+Complete the installation package
+
+```
+sudo apt-get update
+
+sudo apt-get install python3.6
+```
 
 ### Part 7: Install git
 
